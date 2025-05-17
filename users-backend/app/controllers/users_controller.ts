@@ -1,7 +1,6 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import hash from '@adonisjs/core/services/hash'
 import User from '#models/user'
-// import Address from '#models/address'
 
 export default class UsersController {
   async index({ request }: HttpContext) {
@@ -71,15 +70,15 @@ export default class UsersController {
     const user = await User.findBy('email', email)
 
     if (!user) {
-      return response.status(400).json({ message: 'Usuário não encontrado' })
+      return response.status(400).json({ message: 'User not found!' })
     }
 
     const passwordMatched = await hash.verify(user.password, password)
 
     if (!passwordMatched) {
-      return response.status(400).json({ message: 'Senha incorreta' })
+      return response.status(400).json({ message: 'Incorrect password' })
     }
 
-    return response.status(200).json({ message: 'Login bem-sucedido', user })
+    return response.status(200).json({ message: 'Successful login', user })
   }
 }
